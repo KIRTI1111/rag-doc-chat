@@ -21,6 +21,12 @@ A full-stack retrieval-augmented generation (RAG) application for uploading PDF 
 - Collapsible sources panel with excerpt and similarity details
 - Delete-before-insert de-duplication when a document is re-uploaded
 
+## Demo / Example
+
+![Chat with your Document answering a Pro plan support question with a cited response](screenshots/demo-example.png)
+
+*Example: The app answers “What’s the exact response time for Pro plan support?” with the document-grounded response “under 4 hours” and cites Source 2.*
+
 ## Local setup
 
 1. Install dependencies:
