@@ -2,6 +2,8 @@
 
 A full-stack retrieval-augmented generation (RAG) application for uploading PDF documents and asking grounded questions about their content. Answers include the most relevant document excerpts as source citations.
 
+**Live demo:** [chat-with-doc-kirti.vercel.app](https://chat-with-doc-kirti.vercel.app)
+
 ## Tech stack
 
 - Next.js App Router, TypeScript, and Tailwind CSS
@@ -14,10 +16,10 @@ A full-stack retrieval-augmented generation (RAG) application for uploading PDF 
 - PDF upload to S3 and server-side text extraction
 - Sentence-aware document chunking with overlap
 - Embedding generation and storage in Supabase
-- Vector similarity search scoped to the uploaded document
+- Vector similarity search via a Supabase RPC, scoped to the uploaded document
 - Document-grounded chat with source citations
 - Collapsible sources panel with excerpt and similarity details
-- Delete-before-insert processing to avoid duplicate chunks
+- Delete-before-insert de-duplication when a document is re-uploaded
 
 ## Local setup
 
@@ -51,4 +53,4 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Deployment
 
-Vercel deployment is planned but not yet configured.
+Deployed on Vercel: [chat-with-doc-kirti.vercel.app](https://chat-with-doc-kirti.vercel.app)
