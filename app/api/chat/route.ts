@@ -11,7 +11,24 @@ interface DocumentChunk {
   similarity: number;
 }
 
-const supabase = createClient(
+interface Database {
+  public: {
+    Tables: Record<string, never>;
+    Views: Record<string, never>;
+    Functions: {
+      match_document_chunks: {
+        Args: {
+          query_embedding: number[];
+          match_file_key: string;
+          match_count: number;
+        };
+        Returns: DocumentChunk[];
+      };
+    };
+  };
+}
+
+const supabase = createClient<Database>(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!,
 );
@@ -36,7 +53,7 @@ export async function POST(req: NextRequest) {
         match_file_key: fileKey,
         match_count: 4,
       },
-    ).overrideTypes<DocumentChunk[], { merge: false }>();
+    );
 
     if (error) {
       return NextResponse.json(
