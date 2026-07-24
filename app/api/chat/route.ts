@@ -5,6 +5,12 @@ import { getEmbedding } from "@/lib/rag";
 const FIREWORKS_API_KEY = process.env.FIREWORKS_API_KEY;
 const FIREWORKS_URL = "https://api.fireworks.ai/inference/v1/chat/completions";
 
+interface DocumentChunk {
+  chunk_index: number;
+  content: string;
+  similarity: number;
+}
+
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!,
@@ -30,7 +36,7 @@ export async function POST(req: NextRequest) {
         match_file_key: fileKey,
         match_count: 4,
       },
-    );
+    ).overrideTypes<DocumentChunk[], { merge: false }>();
 
     if (error) {
       return NextResponse.json(
@@ -47,7 +53,7 @@ export async function POST(req: NextRequest) {
     }
 
     const context = chunks
-      .map((c: any) => `[Source ${c.chunk_index + 1}]: ${c.content}`)
+      .map((chunk) => `[Source ${chunk.chunk_index + 1}]: ${chunk.content}`)
       .join("\n\n");
 
     const response = await fetch(FIREWORKS_URL, {
@@ -87,10 +93,10 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       answer,
-      sources: chunks.map((c: any) => ({
-        label: `Source ${c.chunk_index + 1}`,
-        content: c.content,
-        similarity: c.similarity,
+      sources: chunks.map((chunk) => ({
+        label: `Source ${chunk.chunk_index + 1}`,
+        content: chunk.content,
+        similarity: chunk.similarity,
       })),
     });
   } catch (err) {
