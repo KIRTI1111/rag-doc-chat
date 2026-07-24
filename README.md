@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chat with your Document
 
-## Getting Started
+A full-stack retrieval-augmented generation (RAG) application for uploading PDF documents and asking grounded questions about their content. Answers include the most relevant document excerpts as source citations.
 
-First, run the development server:
+## Tech stack
+
+- Next.js App Router, TypeScript, and Tailwind CSS
+- AWS S3 for uploaded file storage
+- Supabase with pgvector for embeddings and vector similarity search
+- Fireworks AI for embeddings and GLM chat completions
+
+## Features
+
+- PDF upload to S3 and server-side text extraction
+- Sentence-aware document chunking with overlap
+- Embedding generation and storage in Supabase
+- Vector similarity search scoped to the uploaded document
+- Document-grounded chat with source citations
+- Collapsible sources panel with excerpt and similarity details
+- Delete-before-insert processing to avoid duplicate chunks
+
+## Local setup
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Create `.env.local` with these variables:
+
+```dotenv
+FIREWORKS_API_KEY=
+AWS_REGION=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_BUCKET_NAME=
+NEXT_PUBLIC_SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+```
+
+3. Configure Supabase with a `document_chunks` table using pgvector and a `match_document_chunks` RPC for similarity search.
+
+4. Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Vercel deployment is planned but not yet configured.

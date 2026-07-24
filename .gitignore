@@ -29,8 +29,14 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+*.log
 
-# env files (can opt-in for committing if needed)
+# local caches
+.cache/
+.turbo/
+.eslintcache
+
+# env files and local secrets
 .env*
 
 # vercel
